@@ -5,23 +5,14 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const movies = sequelizeClient.define('movies', {
-    title: {
-      type: DataTypes.CHAR,
+  const theatre = sequelizeClient.define('theatre', {
+    capacity: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    description: {
-      type: DataTypes.TEXT,
+    threed: {
+      type: DataTypes.BOOLEAN,
       allowNull: false
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      field: 'createdat'
-    },
-    updatedAt: {
-
-      type: DataTypes.DATE,
-      field: 'updatedat'
     }
   }, {
     hooks: {
@@ -31,10 +22,10 @@ module.exports = function (app) {
     }
   });
 
-  movies.associate = function (models) { // eslint-disable-line no-unused-vars
+  theatre.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
 
-  return movies;
+  return theatre;
 };

@@ -2,17 +2,33 @@
 // for more of what you can do here.
 const Sequelize = require('sequelize');
 const DataTypes = Sequelize.DataTypes;
+const movies = require('./movies.model');
+const theatre = require('./theatre.model');
 
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const movies = sequelizeClient.define('movies', {
-    title: {
-      type: DataTypes.CHAR,
+  const shows = sequelizeClient.define('shows', {
+    date: {
+      type: DataTypes.DATEONLY,
       allowNull: false
     },
-    description: {
-      type: DataTypes.TEXT,
+    daytime: {
+      type: DataTypes.STRING,
       allowNull: false
+    },
+    movie_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: movies,
+        key: 'id'
+      }
+    },
+    theatre_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: theatre,
+        key: 'id'
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -31,10 +47,10 @@ module.exports = function (app) {
     }
   });
 
-  movies.associate = function (models) { // eslint-disable-line no-unused-vars
+  shows.associate = function (models) { // eslint-disable-line no-unused-vars
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
 
-  return movies;
+  return shows;
 };
